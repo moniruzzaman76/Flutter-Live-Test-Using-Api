@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'model_class.dart';
 
-class RecipeListScreen extends StatelessWidget {
+class RecipeListScreen extends StatefulWidget {
+
+  const RecipeListScreen({super.key});
+
+  @override
+  State<RecipeListScreen> createState() => _RecipeListScreenState();
+}
+
+class _RecipeListScreenState extends State<RecipeListScreen> {
   final String jsonString = '''
     {
       "recipes": [
@@ -45,8 +53,6 @@ class RecipeListScreen extends StatelessWidget {
     }
   ''';
 
-  const RecipeListScreen({super.key});
-
   List<Recipe> _recipesFromJson(String jsonString) {
     final parsedJson = json.decode(jsonString);
     final recipeList = parsedJson['recipes'] as List<dynamic>;
@@ -62,15 +68,21 @@ class RecipeListScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Food Recipes'),
       ),
-      body: ListView.builder(
-        itemCount: recipes.length,
-        itemBuilder: (context, index) {
-          final recipe = recipes[index];
-          return ListTile(
-            title: Text(recipe.title),
-            subtitle: Text(recipe.description),
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView.builder(
+          itemCount: recipes.length,
+          itemBuilder: (context, index) {
+            final recipe = recipes[index];
+            return ListTile(
+              title: Text(
+                recipe.title,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              subtitle: Text(recipe.description,style: const TextStyle(fontSize: 16),),
+            );
+          },
+        ),
       ),
     );
   }
