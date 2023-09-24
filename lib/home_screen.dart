@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'json.dart';
 import 'model_class.dart';
 
 class RecipeListScreen extends StatefulWidget {
@@ -20,59 +21,21 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   void fetchRecipesData() {
-    // Simulate fetching recipes from the JSON
-    String jsonString = '''
-      {
-        "recipes": [
-          {
-            "title": "Pasta Carbonara",
-            "description": "Creamy pasta dish with bacon and cheese.",
-            "ingredients": ["spaghetti", "bacon", "egg", "cheese"]
-          },
-          {
-            "title": "Caprese Salad",
-            "description": "Simple and refreshing salad with tomatoes, mozzarella, and basil.",
-            "ingredients": ["tomatoes", "mozzarella", "basil"]
-          },
-          {
-            "title": "Banana Smoothie",
-            "description": "Healthy and creamy smoothie with bananas and milk.",
-            "ingredients": ["bananas", "milk"]
-          },
-          {
-            "title": "Chicken Stir-Fry",
-            "description": "Quick and flavorful stir-fried chicken with vegetables.",
-            "ingredients": ["chicken breast", "broccoli", "carrot", "soy sauce"]
-          },
-          {
-            "title": "Grilled Salmon",
-            "description": "Delicious grilled salmon with lemon and herbs.",
-            "ingredients": ["salmon fillet", "lemon", "olive oil", "dill"]
-          },
-          {
-            "title": "Vegetable Curry",
-            "description": "Spicy and aromatic vegetable curry.",
-            "ingredients": ["mixed vegetables", "coconut milk", "curry powder"]
-          },
-          {
-            "title": "Berry Parfait",
-            "description": "Layered dessert with fresh berries and yogurt.",
-            "ingredients": ["berries", "yogurt", "granola"]
-          }
-        ]
-      }
-    ''';
 
+    // Simulate fetching recipes from the JSON
     // final jsonData = json.decode(jsonString);
     // final  List<dynamic> recipeList = jsonData['recipes'];
     // //allFoodRecipes = recipeList.map((recipeJson) => Recipe.fromJson(recipeJson)).toList();
 
-
     final List<dynamic>jsonData = jsonDecode(jsonString)['recipes'];
-    allFoodRecipes = jsonData.map((e) => Recipe.fromJson(e)).toList();
+    //allFoodRecipes = jsonData.map((e) => Recipe.fromJson(e)).toList();
+    for (var jsonItem in jsonData) {
+      allFoodRecipes.add(Recipe.fromJson(jsonItem));
+    }
 
     setState(() {});
   }
+
 
   @override
   Widget build(BuildContext context) {
